@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simulation Google CSE</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    #main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1.5rem;
+      padding-top: 1.5em;
+    }
+    .grid-box {
+      padding: 1em;
+      border: 1px solid #ccc;
+      background-color: #fdfdfd;
+    }
+    .box {
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 200px;
+      overflow-y: auto;
+      background-color: #f9f9f9;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+  <h2>Client-Side Encryption Simulator</h2>
+  <p>User: <span id="whoami"></span></p>
+
+  <div id="main-grid">
+    <!-- 🔐 Encrypt & Upload (左上) -->
+    <div class="grid-box">
+      <h3>Encrypt & Upload</h3>
+      <input type="file" id="fileInput" />
+      <button onclick="encryptAndUpload()">Encrypt & Upload</button>
+      <h4>Share With</h4>
+      <div id="recipientCheckboxes" style="margin-bottom: 1em;"></div>
+      <div id="uploadResult" style="margin-top: 1em; color: green;"></div>
+
+      <h4 style="margin-top: 1.5em;">Encrypted File Preview</h4>
+      <pre id="encryptedContent" class="box"><em>No encrypted content yet.</em></pre>
+    </div>
+
+    <!-- 📥 Download & Decrypt (右上) -->
+    <div class="grid-box">
+      <h3>Download & Decrypt</h3>
+      <input type="text" id="fileIdInput" placeholder="Enter File ID..." />
+      <button onclick="downloadAndDecrypt()">Decrypt</button>
+      <button onclick="downloadFile()">Download Decrypted File</button>
+
+      <h4 style="margin-top: 1.5em;">Decrypted File Content</h4>
+      <pre id="decryptedContent" class="box"><em>No file decrypted yet.</em></pre>
+    </div>
+
+    <!-- 🌐 Public Shared Files (左下) -->
+    <div class="grid-box">
+      <h3>Public Shared Files</h3>
+      <div id="publicList" class="box"><em>Loading...</em></div>
+    </div>
+
+    <!-- 📂 My Upload History (右下) -->
+    <div class="grid-box">
+      <h3>My Upload History</h3>
+      <button onclick="clearFileHistory()">Clear History</button>
+      <div id="historyList" class="box"><em>Loading...</em></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

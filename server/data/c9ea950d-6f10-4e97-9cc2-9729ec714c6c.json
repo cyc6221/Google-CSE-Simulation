@@ -1,0 +1,10 @@
+{
+    "sender": "userB",
+    "fileName": "test2.txt",
+    "iv": "1dBy7s0L6rvdDloc",
+    "encryptedData": "W+qe2jFHCp7AqwC2WQV12VoKY188ISGnmjhog0KfRSyKaLv2bggBrO/Ph6ma4ZQNDFHTY/dTmzmbMw==",
+    "encryptedKeys": {
+        "userB": "M9J3RaUwQN5hmdCbZyjm3b/JJar1k4VKeANo7NIJcTz80kgqXS5KX+1aMgrvi0oWPTnIXWi8u4u5c5ZG0ZFDgpY5irFC2H8IPA13wsV2uSpi+3mHs7zQVIHhmI5D3BtPHPq8eR1h5mKPpmrSaqr3nJqXrNQ5Z6s5LodBmvAxDXpyRXyy6ggpiNExNEl1hMlWjtnYk+fybcoLv67erRqZuVW3fUUBLY/Sy4nYxNNmHv+4tQBEFHJDJvSEKPKwao1yMDhkIEQhjX7+H+JzqAzyiPDsK3uLbmJA4Es4h1MZj+lWP0G9tbTNFTpMXtNf8rX7npvgw8liKSrpukVh9U3o2Q==",
+        "userC": "O/sRPIMb9Co9vIWEtymHm/Yuv+nLFUTGsS8L4cSDQ21YUUxAfQj0zLUR0KlxbsptB06n17LN0MbxtlXlFmW1Sos4U052Ij/iTOcTRkHG3f7UeSd1XZ2mdREM49cwUdPNxLY81yW3nconKZ2k0g0TLa2baKjpyC1h091X+5eRv8lUmS+PYZ7d97iei3fUmmoYAblog3+0365zfiejXdVOSB0Rnw6ojz1RySBYJzC1fiW5jikKXQCfOnm8qczOG/Q/GMB65WrZ1rnWjqVBz/+AYovzbxBfzmJhmRdz0zAMCgIPq6IHV/ukysZsCsbmH1oLDkQU4EKFFJ8MdHIi8GRY5A=="
+    }
+}

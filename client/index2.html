@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simulation Google CSE</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Client-Side Encryption Simulator</h2>
+  <p>User: <span id="whoami"></span></p>
+
+  <!-- 上傳與加密區 -->
+  <div style="margin-top: 1.5em;">
+    <h4>Upload & Encrypt File</h4>
+    <input type="file" id="fileInput" />
+    <button onclick="encryptAndUpload()">Encrypt & Upload</button>
+  </div>
+
+  <!-- 顯示上傳結果 -->
+  <div id="uploadResult" style="margin-top: 1em; color: green;"></div>
+
+  <hr style="margin-top: 2em;">
+
+  <!-- 下載與解密區 -->
+  <div>
+    <h4>Download & Decrypt File</h4>
+    <input type="text" id="fileIdInput" placeholder="Enter File ID..." />
+    <button onclick="downloadAndDecrypt()">Download & Decrypt</button>
+    <button onclick="downloadFile()">Download Decrypted File</button>
+  </div>
+
+  <!-- 顯示解密結果 -->
+  <div id="decryptedContentBox" style="margin-top: 1.5em;">
+    <h4>Decrypted File Content</h4>
+    <pre id="decryptedContent" class="box"><em>No file decrypted yet.</em></pre>
+  </div>
+
+  <!-- 顯示密文預覽 -->
+  <div style="margin-top: 1em;">
+    <h4>Encrypted File Preview</h4>
+    <pre id="encryptedContent" class="box"><em>No encrypted content yet.</em></pre>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
