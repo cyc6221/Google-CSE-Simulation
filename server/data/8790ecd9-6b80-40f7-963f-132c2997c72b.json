@@ -1,9 +1,0 @@
-{
-    "sender": "userA",
-    "fileName": "test.txt",
-    "iv": "KCe6Pxkkz2i1ZkoC",
-    "encryptedData": "xhc9IT8XK65BSkdSQ0Q0H6zFvIu25fXJ1Nv/hRxUAkK8ixLuJevXl8zgCEXP",
-    "encryptedKeys": {
-        "userA": "A+ukhyo7Q/Mg5NOy3JmzV7bhESOogXD7yF091454262GJQL1jCW62s2OmJDfxxjTcoDyFgA2B+YIYe3dztbe5YQxpxjpuLvWSGKW8aQKKBXlShbZUbZlfDekrjSYdlPMqe4Dq0SOLPLuVEQYQlzKvDvVwDijw8UjeCZdRjMbE9EfvlS6tGJRn6Qu6oyKpa5NoXTrfs592K6krhAhYVZ4SLFVr0L9xu4f8IT7+22btEXdxrTRC6E3iiIU2wrUUDPkA4vq1zMNzeirO+I2GufXb6NB9x79bUw3nosc7TK61zBMM6T4PGf233gOvc6frpEMe+nWtMvieMlrixHRj0o6aA=="
-    }
-}
