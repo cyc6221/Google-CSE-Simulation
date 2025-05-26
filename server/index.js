@@ -4,6 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
+const speakeasy = require('speakeasy');
+const qrcode = require('qrcode');
 
 const app = express();
 app.use(cors());
@@ -24,7 +26,7 @@ fs.readdirSync(FILE_DIR).forEach(file => {
 });
 
 // === Register ===
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
   const { username, password } = req.body;
   const userPath = path.join(USER_DIR, username);
 
@@ -43,18 +45,43 @@ app.post('/register', (req, res) => {
   fs.writeFileSync(path.join(userPath, 'public.pem'), publicKey.export({ type: 'pkcs1', format: 'pem' }));
   fs.writeFileSync(path.join(userPath, 'private.pem'), privateKey.export({ type: 'pkcs1', format: 'pem' }));
 
-  res.send('User registered successfully');
+  // === 產生 TOTP secret 並儲存
+  const totpSecret = speakeasy.generateSecret({ name: `CSE-Simulator (${username})` });
+  fs.writeFileSync(path.join(userPath, 'totp.txt'), totpSecret.base32);
+
+  // === 產生 QR Code data URI
+  const qrDataURL = await qrcode.toDataURL(totpSecret.otpauth_url);
+
+  res.json({
+    message: 'User registered successfully',
+    secret: totpSecret.base32,
+    qr: qrDataURL
+  });
 });
 
 // === Login ===
 app.post('/login', (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, totp } = req.body;
   const userPath = path.join(USER_DIR, username);
 
   if (!fs.existsSync(userPath)) return res.status(404).send('User not found');
 
-  const saved = fs.readFileSync(path.join(userPath, 'password.txt'), 'utf-8');
-  if (saved !== password) return res.status(401).send('Invalid password');
+  const savedPwd = fs.readFileSync(path.join(userPath, 'password.txt'), 'utf-8');
+  if (savedPwd !== password) return res.status(401).send('Invalid password');
+
+  // === 驗證 TOTP
+  const secretPath = path.join(userPath, 'totp.txt');
+  if (!fs.existsSync(secretPath)) return res.status(500).send('TOTP not set');
+
+  const secret = fs.readFileSync(secretPath, 'utf-8');
+  const verified = speakeasy.totp.verify({
+    secret,
+    encoding: 'base32',
+    token: totp,
+    window: 1
+  });
+
+  if (!verified) return res.status(403).send('Invalid TOTP code');
 
   res.send('Login successful');
 });
@@ -93,11 +120,11 @@ app.get('/public', (req, res) => {
 
 // === List the users ===
 app.get("/users", (req, res) => {
-    const userDirs = fs.readdirSync(USER_DIR, { withFileTypes: true })
-      .filter(entry => entry.isDirectory())
-      .map(entry => entry.name);
-    res.send(userDirs);
-  });  
+  const userDirs = fs.readdirSync(USER_DIR, { withFileTypes: true })
+    .filter(entry => entry.isDirectory())
+    .map(entry => entry.name);
+  res.send(userDirs);
+});
 
 // === Delete the user ===
 app.delete("/users/:username", (req, res) => {
@@ -114,5 +141,5 @@ app.delete("/users/:username", (req, res) => {
 
 // === Start server ===
 app.listen(8000, () => {
-  console.log('🚀 CSE Simulation Server with Auth running on http://localhost:8000');
+  console.log('🚀 CSE Simulation Server with TOTP 2FA running on http://localhost:8000');
 });

@@ -20,11 +20,12 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const username = document.getElementById("login-username").value;
   const password = document.getElementById("login-password").value;
+  const totp = document.getElementById("login-totp").value;
 
   const res = await fetch("http://localhost:8000/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password })
+    body: JSON.stringify({ username, password, totp })
   });
 
   const msg = await res.text();
