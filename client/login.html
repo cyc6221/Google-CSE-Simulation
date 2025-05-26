@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Client-Side Encryption Simulator Login Page</title>
+  <!-- <link rel="stylesheet" href="style.css" /> -->
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <h1>Client-Side Encryption Simulator Login Page</h1>
+
+  <div id="forms">
+    <!-- <div>
+      <form id="register-form">
+        <h2>Register</h2>
+        <input type="text" id="register-username" placeholder="Username" required />
+        <input type="password" id="register-password" placeholder="Password" required />
+        <button type="submit">Register</button>
+      </form>
+    </div> -->
+
+    <div>
+      <form id="login-form">
+        <h2>Login</h2> 
+        <input type="text" id="login-username" placeholder="Username" required />
+        <input type="password" id="login-password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+      <p style="text-align:center; margin-top: 1em;">
+        Don't have an account? <a href="register.html">Register here</a>
+      </p>    
+    </div>
+  </div>
+
+  <div id="result"></div>
+
+  <hr>
+
+  <div id="activeUsers">
+    <h3>
+      Registered Users
+      <button id="refreshUsersBtn">🔄 Refresh</button>
+    </h3>
+    <table id="userTable">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Fill in Username</th>
+          <th>Delete User</th>
+        </tr>
+      </thead>
+      <tbody id="userList">
+        <tr><td colspan="3"><em>Loading...</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>

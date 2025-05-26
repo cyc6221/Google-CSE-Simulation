@@ -1,0 +1,11 @@
+# This is encrypted message
+server/data/encrypted/*
+
+# This is user data
+server/data/users/*
+
+# This is test data
+testdata*
+
+# This is temp data
+old*

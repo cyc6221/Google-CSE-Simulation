@@ -1,9 +1,22 @@
 // Rebuilt client app.js with public file list and auto-clear server storage
-(() => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const userId = urlParams.get("user") || "userA";
-  document.getElementById("whoami").innerText = userId;
+// (() => {
+  // const urlParams = new URLSearchParams(window.location.search);
+  // const userId = urlParams.get("user") || "userA";
+  // document.getElementById("whoami").innerText = userId;
 
+(() => {
+  // const userId = localStorage.getItem("username");
+  const userId = sessionStorage.getItem("username");
+
+  // 如果未登入就跳轉回登入頁
+  if (!userId) {
+    alert("Please login first.");
+    window.location.href = "login.html";
+    return;
+  }
+
+  document.getElementById("whoami").innerText = userId;
+  
   // const groupUsers = ["userA", "userB", "userC"];
   let latestDecryptedText = "";
 
@@ -113,26 +126,57 @@
   //   }
   // }
 
-  function renderRecipientCheckboxes() {
-    const users = ["userA", "userB", "userC"];
+  // function renderRecipientCheckboxes() {
+  //   const users = ["userA", "userB", "userC"];
+  //   const container = document.getElementById("recipientCheckboxes");
+  //   container.innerHTML = "";
+
+  //   const selectAllBtn = document.createElement("button");
+  //   selectAllBtn.textContent = "Select All";
+  //   selectAllBtn.onclick = () => {
+  //     container.querySelectorAll("input[type='checkbox']").forEach(cb => cb.checked = true);
+  //   };
+  //   container.appendChild(selectAllBtn);
+
+  //   container.appendChild(document.createElement("br"));
+
+  //   for (const user of users) {
+  //     const label = document.createElement("label");
+  //     const box = document.createElement("input");
+  //     box.type = "checkbox";
+  //     box.value = user;
+  //     box.checked = user === userId; // 預設自己勾選
+  //     label.appendChild(box);
+  //     label.append(` ${user} `);
+  //     container.appendChild(label);
+  //     container.appendChild(document.createElement("br"));
+  //   }
+  // }
+
+  async function renderRecipientCheckboxes() {
     const container = document.getElementById("recipientCheckboxes");
     container.innerHTML = "";
-
+  
+    // 從後端取得所有註冊的使用者
+    const res = await fetch("http://localhost:8000/users");
+    const users = await res.json();
+  
+    // 新增「全選」按鈕
     const selectAllBtn = document.createElement("button");
     selectAllBtn.textContent = "Select All";
     selectAllBtn.onclick = () => {
       container.querySelectorAll("input[type='checkbox']").forEach(cb => cb.checked = true);
     };
     container.appendChild(selectAllBtn);
-
     container.appendChild(document.createElement("br"));
-
+  
+    // 建立使用者清單 checkbox
     for (const user of users) {
       const label = document.createElement("label");
       const box = document.createElement("input");
       box.type = "checkbox";
       box.value = user;
-      box.checked = user === userId; // 預設自己勾選
+      box.checked = user === userId; // 自己預設勾選
       label.appendChild(box);
       label.append(` ${user} `);
       container.appendChild(label);
@@ -153,7 +197,11 @@
 
     const exportedPriv = await crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
     const pem = btoa(String.fromCharCode(...new Uint8Array(exportedPriv)));
-    localStorage.setItem(
+    // localStorage.setItem(
+    //   `${userId}PrivateKey`,
+    //   `-----BEGIN PRIVATE KEY-----\n${pem.match(/.{1,64}/g).join("\n")}\n-----END PRIVATE KEY-----`
+    // );
+    sessionStorage.setItem(
       `${userId}PrivateKey`,
       `-----BEGIN PRIVATE KEY-----\n${pem.match(/.{1,64}/g).join("\n")}\n-----END PRIVATE KEY-----`
     );
@@ -234,7 +282,8 @@
       const encryptedKey = encryptedKeys[userId];
       if (!encryptedKey) return alert("You are not authorized to decrypt this file.");
 
-      const privateKeyPem = localStorage.getItem(`${userId}PrivateKey`);
+      // const privateKeyPem = localStorage.getItem(`${userId}PrivateKey`);
+      const privateKeyPem = sessionStorage.getItem(`${userId}PrivateKey`);
       const binary = Uint8Array.from(atob(privateKeyPem.replace(/-----[^-]+-----|\n/g, '')), c => c.charCodeAt(0));
       const privateKey = await crypto.subtle.importKey("pkcs8", binary.buffer, { name: "RSA-OAEP", hash: "SHA-256" }, false, ["decrypt"]);
 

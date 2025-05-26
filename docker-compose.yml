@@ -19,35 +19,57 @@ services:
     volumes:
       - ./server/data:/app/data
 
-  client-a:
-    build:
-      context: ./client
-    container_name: client-a
-    ports:
-      - "8081:80"
-    depends_on:
-      - kms
-      - web-server
-    restart: unless-stopped
+  # client-a:
+  #   build:
+  #     context: ./client
+  #   container_name: client-a
+  #   ports:
+  #     - "8081:80"
+  #   depends_on:
+  #     - kms
+  #     - web-server
+  #   restart: unless-stopped
 
-  client-b:
-    build:
-      context: ./client
-    container_name: client-b
-    ports:
-      - "8082:80"
-    depends_on:
-      - kms
-      - web-server
-    restart: unless-stopped
+  # client-b:
+  #   build:
+  #     context: ./client
+  #   container_name: client-b
+  #   ports:
+  #     - "8082:80"
+  #   depends_on:
+  #     - kms
+  #     - web-server
+  #   restart: unless-stopped
 
-  client-c:
+  # client-c:
+  #   build:
+  #     context: ./client
+  #   container_name: client-c
+  #   ports:
+  #     - "8083:80"
+  #   depends_on:
+  #     - kms
+  #     - web-server
+  #   restart: unless-stopped
+
+  # web-client:
+  #   build:
+  #     context: ./client
+  #   container_name: web-client
+  #   ports:
+  #     - "8080:80"
+  #   depends_on:
+  #     - web-server
+  #     - kms
+  #   restart: unless-stopped
+
+  web-client:
     build:
       context: ./client
-    container_name: client-c
+    container_name: web-client
     ports:
-      - "8083:80"
+      - "8080:80"
     depends_on:
-      - kms
       - web-server
+      - kms
     restart: unless-stopped

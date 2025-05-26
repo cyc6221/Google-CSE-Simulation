@@ -2,30 +2,7 @@
 <html>
 <head>
   <title>Simulation Google CSE</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    #main-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto;
-      gap: 1.5rem;
-      padding-top: 1.5em;
-    }
-    .grid-box {
-      padding: 1em;
-      border: 1px solid #ccc;
-      background-color: #fdfdfd;
-    }
-    .box {
-      border: 1px solid #ccc;
-      padding: 10px;
-      height: 200px;
-      overflow-y: auto;
-      background-color: #f9f9f9;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-  </style>
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
   <h2>Client-Side Encryption Simulator</h2>
@@ -69,6 +46,17 @@
       <div id="historyList" class="box"><em>Loading...</em></div>
     </div>
   </div>
+
+  <script>
+    const username = localStorage.getItem("username");
+    if (!username) {
+      // 如果未登入，跳轉回登入頁
+      window.location.href = "login.html";
+    } else {
+      // 顯示目前使用者
+      document.getElementById("whoami").innerText = username;
+    }
+  </script>
 
   <script src="app.js"></script>
 </body>
